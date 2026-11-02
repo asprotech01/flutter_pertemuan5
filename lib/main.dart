@@ -50,6 +50,22 @@ class MyApp extends StatelessWidget {
                     style: TextStyle(fontSize: 16, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
+                  const SizedBox(height: 24),
+
+                  // Edit Profile Button
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Fitur edit belum aktif pada modul statis.',
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.edit),
+                    label: const Text('Edit Profil'),
+                  ),
                 ],
               ),
             ],
