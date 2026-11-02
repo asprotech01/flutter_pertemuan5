@@ -7,6 +7,13 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  final List<String> experiences = const [
+    'Used Smartphone Expert System - Laravel',
+    'ConstructPro - PHP Company Profile',
+    'BigSport - Laravel E-Commerce',
+    'Drivehub - Used Car Platform',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,44 +22,49 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Profil Pengguna'),
-          centerTitle: true,
-          backgroundColor: Colors.blueAccent,
-          foregroundColor: Colors.white,
-        ),
+      home: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Profil Pengguna'),
+              centerTitle: true,
+              backgroundColor: Colors.blueAccent,
+              foregroundColor: Colors.white,
+            ),
 
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              // Profile Avatar
-              const CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.grey,
-                child: Icon(Icons.person, size: 50, color: Colors.white),
-              ),
-
-              const SizedBox(height: 16),
-
-              // Profile Information
-              Column(
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
                 children: [
-                  const Text(
-                    'Achmad Sofyan',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
+                  const CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.grey,
+                    child: Icon(Icons.person, size: 50, color: Colors.white),
                   ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Software Engineering Student',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
-                    textAlign: TextAlign.center,
+
+                  const SizedBox(height: 16),
+
+                  Column(
+                    children: [
+                      const Text(
+                        'Achmad Sofyan',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Software Engineering Student',
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
+
                   const SizedBox(height: 24),
 
-                  // Edit Profile Button
                   ElevatedButton.icon(
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -69,7 +81,6 @@ class MyApp extends StatelessWidget {
 
                   const SizedBox(height: 24),
 
-                  // Profile Statistics
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     decoration: BoxDecoration(
@@ -87,11 +98,45 @@ class MyApp extends StatelessWidget {
                       ],
                     ),
                   ),
+
+                  const SizedBox(height: 24),
+
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Pengalaman Kerja',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
+                  const Divider(),
+
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: experiences.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          elevation: 2,
+                          margin: const EdgeInsets.symmetric(vertical: 6),
+                          child: ListTile(
+                            leading: const Icon(
+                              Icons.work,
+                              color: Colors.blueAccent,
+                            ),
+                            title: Text(experiences[index]),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
