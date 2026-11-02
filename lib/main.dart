@@ -4,15 +4,95 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  final List<String> experiences = const [
+  final List<String> projectExperiences = const [
     'Used Smartphone Expert System - Laravel',
     'ConstructPro - PHP Company Profile',
     'BigSport - Laravel E-Commerce',
     'Drivehub - Used Car Platform',
   ];
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String userName = 'Achmad Sofyan';
+  String userRole = 'Software Engineering Student';
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController roleController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    roleController.dispose();
+    super.dispose();
+  }
+
+  void editProfile(BuildContext context) {
+    nameController.text = userName;
+    roleController.text = userRole;
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('Edit Profil'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Nama',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: roleController,
+                decoration: const InputDecoration(
+                  labelText: 'Program Studi',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(dialogContext);
+              },
+              child: const Text('Batal'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (nameController.text.trim().isEmpty ||
+                    roleController.text.trim().isEmpty) {
+                  return;
+                }
+
+                setState(() {
+                  userName = nameController.text.trim();
+                  userRole = roleController.text.trim();
+                });
+
+                Navigator.pop(dialogContext);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Profil berhasil diperbarui!')),
+                );
+              },
+              child: const Text('Simpan'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +109,6 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.blueAccent,
           foregroundColor: Colors.white,
         ),
-
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -39,38 +118,31 @@ class MyApp extends StatelessWidget {
                 backgroundColor: Colors.grey,
                 child: Icon(Icons.person, size: 50, color: Colors.white),
               ),
-
               const SizedBox(height: 16),
-
               Column(
                 children: [
-                  const Text(
-                    'Achmad Sofyan',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  Text(
+                    userName,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Software Engineering Student',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  Text(
+                    userRole,
+                    style: const TextStyle(fontSize: 16, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                 ],
               ),
-
               const SizedBox(height: 24),
-
               Builder(
                 builder: (buttonContext) {
                   return ElevatedButton.icon(
                     onPressed: () {
-                      ScaffoldMessenger.of(buttonContext).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Fitur edit belum aktif pada modul statis.',
-                          ),
-                        ),
-                      );
+                      editProfile(buttonContext);
                     },
                     icon: const Icon(Icons.edit),
                     label: const Text('Edit Profil'),
@@ -78,7 +150,6 @@ class MyApp extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 24),
-
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
@@ -96,9 +167,7 @@ class MyApp extends StatelessWidget {
                   ],
                 ),
               ),
-
               const SizedBox(height: 24),
-
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -106,20 +175,18 @@ class MyApp extends StatelessWidget {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
-
               const Divider(),
-
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: experiences.length,
+                itemCount: widget.projectExperiences.length,
                 itemBuilder: (context, index) {
                   return Card(
                     elevation: 2,
                     margin: const EdgeInsets.symmetric(vertical: 6),
                     child: ListTile(
                       leading: const Icon(Icons.work, color: Colors.blueAccent),
-                      title: Text(experiences[index]),
+                      title: Text(widget.projectExperiences[index]),
                     ),
                   );
                 },
