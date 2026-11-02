@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
               foregroundColor: Colors.white,
             ),
 
-            body: Padding(
+            body: SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
@@ -114,23 +114,23 @@ class MyApp extends StatelessWidget {
 
                   const Divider(),
 
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: experiences.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 2,
-                          margin: const EdgeInsets.symmetric(vertical: 6),
-                          child: ListTile(
-                            leading: const Icon(
-                              Icons.work,
-                              color: Colors.blueAccent,
-                            ),
-                            title: Text(experiences[index]),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: experiences.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 2,
+                        margin: const EdgeInsets.symmetric(vertical: 6),
+                        child: ListTile(
+                          leading: const Icon(
+                            Icons.work,
+                            color: Colors.blueAccent,
                           ),
-                        );
-                      },
-                    ),
+                          title: Text(experiences[index]),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
