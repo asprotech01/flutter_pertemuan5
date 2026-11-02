@@ -22,52 +22,49 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
       ),
-      home: Builder(
-        builder: (context) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Profil Pengguna'),
-              centerTitle: true,
-              backgroundColor: Colors.blueAccent,
-              foregroundColor: Colors.white,
-            ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Profil Pengguna'),
+          centerTitle: true,
+          backgroundColor: Colors.blueAccent,
+          foregroundColor: Colors.white,
+        ),
 
-            body: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              const CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.grey,
+                child: Icon(Icons.person, size: 50, color: Colors.white),
+              ),
+
+              const SizedBox(height: 16),
+
+              Column(
                 children: [
-                  const CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Colors.grey,
-                    child: Icon(Icons.person, size: 50, color: Colors.white),
+                  const Text(
+                    'Achmad Sofyan',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
                   ),
-
-                  const SizedBox(height: 16),
-
-                  Column(
-                    children: [
-                      const Text(
-                        'Achmad Sofyan',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        'Software Engineering Student',
-                        style: TextStyle(fontSize: 16, color: Colors.grey),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Software Engineering Student',
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                    textAlign: TextAlign.center,
                   ),
+                ],
+              ),
 
-                  const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-                  ElevatedButton.icon(
+              Builder(
+                builder: (buttonContext) {
+                  return ElevatedButton.icon(
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      ScaffoldMessenger.of(buttonContext).showSnackBar(
                         const SnackBar(
                           content: Text(
                             'Fitur edit belum aktif pada modul statis.',
@@ -77,66 +74,59 @@ class MyApp extends StatelessWidget {
                     },
                     icon: const Icon(Icons.edit),
                     label: const Text('Edit Profil'),
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.blue[50],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const StatItem(count: 'Web', label: 'Development'),
-                        const SizedBox(width: 24),
-                        const StatItem(count: 'Mobile', label: 'Application'),
-                        const SizedBox(width: 24),
-                        const StatItem(count: 'UI/UX', label: 'Design'),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Pengalaman Kerja',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-
-                  const Divider(),
-
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: experiences.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        elevation: 2,
-                        margin: const EdgeInsets.symmetric(vertical: 6),
-                        child: ListTile(
-                          leading: const Icon(
-                            Icons.work,
-                            color: Colors.blueAccent,
-                          ),
-                          title: Text(experiences[index]),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                  );
+                },
               ),
-            ),
-          );
-        },
+              const SizedBox(height: 24),
+
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: Colors.blue[50],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const StatItem(count: 'Web', label: 'Development'),
+                    const SizedBox(width: 24),
+                    const StatItem(count: 'Mobile', label: 'Application'),
+                    const SizedBox(width: 24),
+                    const StatItem(count: 'UI/UX', label: 'Design'),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Pengalaman & Proyek',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+
+              const Divider(),
+
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: experiences.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    elevation: 2,
+                    margin: const EdgeInsets.symmetric(vertical: 6),
+                    child: ListTile(
+                      leading: const Icon(Icons.work, color: Colors.blueAccent),
+                      title: Text(experiences[index]),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
